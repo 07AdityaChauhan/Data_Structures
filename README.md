@@ -1,13 +1,13 @@
 # 🚀 Data Structures Journey
 Welcome to my Data Structures Journey!
-This repository documents my learning and practice of Data Structures and Algorithms (DSA). I will regularly upload solutions, notes, and implementations as I progress.
+This repository documents my learning and practice of Data Structures.
 
 ## 🎯 Goal
 - Strengthen problem-solving skills
 - Master fundamental data structures
 - Improve coding efficiency
-- Prepare for coding interviews and competitive programming
-- 
+
+  
 ## 📚 Topics to be Covered
 - Arrays
 - Strings
