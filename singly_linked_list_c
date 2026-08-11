@@ -1,0 +1,226 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node{
+    int data;
+    struct node *next;
+};
+struct node *start = NULL;
+
+struct node *insertAtBegin(struct node *start){
+    struct node *newNode;
+    int value;
+    newNode = (struct node *)malloc(sizeof(struct node));
+    printf("Enter the data: ");
+    scanf("%d", &value);
+    newNode->data = value;
+    if (start == NULL){
+        newNode->next = NULL;
+        start = newNode;
+    }else{
+        newNode->next = start;
+        start = newNode;
+    }
+    return start;
+}
+
+struct node *insertAtEnd(struct node *start){
+    struct node *newNode, *p;
+    int value;
+    newNode = (struct node *)malloc(sizeof(struct node));
+    printf("Enter the data: ");
+    scanf("%d", &value);
+    newNode->data = value;
+    if(start == NULL){
+        newNode->next = NULL;
+        start = newNode;
+    }else{
+        p = start;
+        while (p->next != NULL){
+            p = p->next;
+        }
+        p->next = newNode;
+        newNode->next = NULL;
+    }
+    return start;
+}
+
+struct node *insertAtLocation(struct node *start){
+    struct node *newNode, *p;
+    int value, loc, i;
+    newNode = (struct node *)malloc(sizeof(struct node));
+    printf("Enter the data: ");
+    scanf("%d", &value);
+    printf("Enter the location: ");
+    scanf("%d", &loc);
+    newNode->data = value;
+
+    if (loc == 1){
+        newNode->next = start;
+        start = newNode;
+        printf("\nNode inserted");
+        return start;
+    }
+    p = start;
+    for (i = 1; i < loc - 1 && p != NULL; i++){
+        p = p->next;
+    }
+    if (p == NULL){
+        printf("\nCan't insert\n");
+        free(newNode);
+        return start;
+    }
+    newNode->next = p->next;
+    p->next = newNode;
+    printf("\nNode inserted");
+    return start;
+}
+
+struct node *deleteFirst(struct node *start){
+    struct node *p;
+    if (start == NULL){
+        printf("\nLinked list not initialized");
+    }else{
+        p = start;
+        start = p->next;
+        free(p);
+        printf("\nFirst node deleted");
+    }
+    return start;
+}
+
+struct node *deleteLast(struct node *start){
+    struct node *p, *q;
+    if (start == NULL){
+        printf("\nLinked list not initialized");
+    }else if (start->next == NULL){
+        free(start);
+        start = NULL;
+
+        printf("\nLast node deleted");
+    }else{
+        p = q = start;
+
+        while (p->next != NULL){
+            q = p;
+            p = p->next;
+        }
+
+        q->next = NULL;
+        free(p);
+
+        printf("\nLast node deleted");
+    }
+
+    return start;
+}
+
+struct node *deleteSpecific(struct node *start){
+    struct node *p, *q;
+    int value;
+
+    if (start == NULL){
+        printf("\nLinked list not initialized");
+        return start;
+    }
+
+    printf("Which node do you want to delete? ");
+    scanf("%d", &value);
+
+    if (start->data == value){
+        p = start;
+        start = start->next;
+        free(p);
+
+        printf("\nNode deleted");
+        return start;
+    }
+    p = start->next;
+    q = start;
+    while (p != NULL && p->data != value){
+        q = p;
+        p = p->next;
+    }
+    if (p == NULL){
+        printf("\nNode not found");
+    }else{
+        q->next = p->next;
+        free(p);
+        printf("\nNode deleted");
+    }
+    return start;
+}
+
+struct node *display(struct node *start)
+{
+    struct node *p = start;
+    if (start == NULL){
+        printf("\nLinked list is empty");
+    }else{
+        printf("\nLinked List: ");
+        while (p != NULL){
+            printf("%d -> ", p->data);
+            p = p->next;
+        }
+        printf("NULL");
+    }
+    return start;
+}
+
+int main()
+{
+    int choice;
+    do{
+        printf("\n\n----- SINGLY LINKED LIST -----");
+        printf("\n1. Insert at Beginning");
+        printf("\n2. Insert at End");
+        printf("\n3. Insert at Location");
+        printf("\n4. Delete First");
+        printf("\n5. Delete Last");
+        printf("\n6. Delete Specific");
+        printf("\n7. Display");
+        printf("\n8. Exit");
+
+        printf("\n\nEnter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice){
+            case 1:
+                start = insertAtBegin(start);
+                break;
+
+            case 2:
+                start = insertAtEnd(start);
+                break;
+
+            case 3:
+                start = insertAtLocation(start);
+                break;
+
+            case 4:
+                start = deleteFirst(start);
+                break;
+
+            case 5:
+                start = deleteLast(start);
+                break;
+
+            case 6:
+                start = deleteSpecific(start);
+                break;
+
+            case 7:
+                display(start);
+                break;
+
+            case 8:
+                printf("\nExiting.");
+                break;
+
+            default:
+                printf("\nInvalid choice!");
+        }
+    } while (choice != 8);
+
+    return 0;
+}
